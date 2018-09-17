@@ -10,8 +10,20 @@
     <div class="input-group-append">
         <button type="submit" class="btn btn-outline-secondary">Go</button>
     </div>
-</form>
+     <!--
+        <div class="input-group control-group after-add-more">
+        <input type="text" name="addmore[]" class="form-control" placeholder="Please enter text to be turned to speech" ng-model="TextNSpeech" id="TextNSpeech">
+     -->
 
+</form>
+<form ng-sumbit="submittext()" class="input-group mb-4">
+
+    <div class="form-group align-content-center">
+        <label for="exampleFormControlTextarea1"></label>
+        <textarea class="form-control"  id="exampleFormControlTextarea1" rows="4" cols="60" ng-model="TextNSpeech" placeholder="Please enter text to be turned to speech" ></textarea>
+        <button ng-click="TextToSpeech()" type="button" class="btn btn-outline-secondary align-content-center"> Enter </button>
+    </div>
+</form>
 <ul class="list-group" ng-if="url">
     <li class="list-group-item">{{url}}</li>
 </ul>
