@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08ddc37e-15ad-418b-aec2-03d0e4e3a8ed" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/app/contact/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/app/contact/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lab1/app/home/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/app/home/home.js" afterDir="false" />
-    </list>
+    <list default="true" id="08ddc37e-15ad-418b-aec2-03d0e4e3a8ed" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -39,13 +35,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="894" />
+          <entry key="html" value="900" />
           <entry key="js" value="45" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="894" />
+          <entry key="HTML" value="900" />
           <entry key="JavaScript" value="45" />
         </counts>
       </usages-collector>
@@ -53,11 +49,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Lab1/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="37" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="38" />
+            <state relative-caret-position="133">
+              <caret line="31" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -101,11 +97,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Lab1/app/contact/contact.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="34" column="6" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+            <state relative-caret-position="544">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
               <folding>
                 <element signature="n#div#0;n#!!top" />
                 <element signature="n#style#0;n#textarea#0;n#div#0;n#!!top" expanded="true" />
@@ -237,12 +233,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1537071352900</updated>
-      <workItem from="1537071355415" duration="11594000" />
+      <workItem from="1537071355415" duration="11853000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11594000" />
+    <option name="totallyTimeSpent" value="11853000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -325,24 +321,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Lab1/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="31" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Lab1/app/contact/contact.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Lab1/app/contact/contact.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="34" column="6" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+        <state relative-caret-position="544">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
           <folding>
             <element signature="n#div#0;n#!!top" />
             <element signature="n#style#0;n#textarea#0;n#div#0;n#!!top" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lab1/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="37" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="38" />
         </state>
       </provider>
     </entry>
