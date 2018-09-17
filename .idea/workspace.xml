@@ -2,7 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08ddc37e-15ad-418b-aec2-03d0e4e3a8ed" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/Lab1/app/contact/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/app/contact/contact.html" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab1/app/contact/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/app/contact/contact.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lab1/app/home/home.js" beforeDir="false" afterPath="$PROJECT_DIR$/Lab1/app/home/home.js" afterDir="false" />
+>>>>>>> parent of 8e73583... extra
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -37,13 +43,21 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="html" value="1004" />
+=======
+          <entry key="html" value="894" />
+>>>>>>> parent of 8e73583... extra
           <entry key="js" value="45" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
+<<<<<<< HEAD
           <entry key="HTML" value="1004" />
+=======
+          <entry key="HTML" value="894" />
+>>>>>>> parent of 8e73583... extra
           <entry key="JavaScript" value="45" />
         </counts>
       </usages-collector>
@@ -51,11 +65,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Lab1/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="133">
               <caret line="31" selection-start-line="31" selection-end-line="31" />
+=======
+            <state relative-caret-position="272">
+              <caret line="37" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="38" />
+>>>>>>> parent of 8e73583... extra
             </state>
           </provider>
         </entry>
@@ -96,11 +115,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Lab1/app/contact/contact.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="476">
               <caret line="31" column="71" selection-start-line="31" selection-start-column="71" selection-end-line="31" selection-end-column="71" />
+=======
+            <state relative-caret-position="525">
+              <caret line="34" column="6" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+>>>>>>> parent of 8e73583... extra
               <folding>
                 <element signature="n#style#0;n#textarea#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -235,12 +259,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1537071352900</updated>
+<<<<<<< HEAD
       <workItem from="1537071355415" duration="12369000" />
+=======
+      <workItem from="1537071355415" duration="11594000" />
+>>>>>>> parent of 8e73583... extra
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="12369000" />
+=======
+    <option name="totallyTimeSpent" value="11594000" />
+>>>>>>> parent of 8e73583... extra
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -310,6 +342,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/Lab1/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -327,6 +360,8 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> parent of 8e73583... extra
     <entry file="file://$PROJECT_DIR$/Lab1/app/contact/contact.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -336,11 +371,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Lab1/app/contact/contact.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="476">
           <caret line="31" column="71" selection-start-line="31" selection-start-column="71" selection-end-line="31" selection-end-column="71" />
+=======
+        <state relative-caret-position="525">
+          <caret line="34" column="6" lean-forward="true" selection-start-line="34" selection-start-column="6" selection-end-line="34" selection-end-column="6" />
+>>>>>>> parent of 8e73583... extra
           <folding>
             <element signature="n#style#0;n#textarea#0;n#div#1;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Lab1/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="37" lean-forward="true" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="38" />
         </state>
       </provider>
     </entry>
