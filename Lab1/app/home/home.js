@@ -35,13 +35,7 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 
 
     $scope.TextNSpeech = document.getElementById('TextNSpeech').value;
-    // const NutritionixID = 04cd3328;
-    // const NutritionixKey = 9c23f013f3650abadcea8e7faab5085e;
-	//	$scope.FindCalories = function(){
-    //    $http.get('https://api.nutritionix.com/v1_1/search/'
-    //        + $scope.FoodItem + '?results=0:1&fields=*&appId=04cd3328&appKey=9c23f013f3650abadcea8e7faab5085e').then(function(data) {
-    //        console.log(data);
-	// Components to URL.
+
 
 
 
