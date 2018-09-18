@@ -2,26 +2,48 @@
     <h1 class="display-4 text-info">Home</h1>
 </div>
 
-<form ng-submit="submit()" class="input-group mb-4">
-    <input type="text" ng-model="protocol" class="form-control" placeholder="https">://
-    <input type="text" ng-model="host" class="form-control" placeholder="hostname">:
-    <input type="text" ng-model="ports" class="form-control" placeholder="port">/
-    <input type="text" ng-model="path" class="form-control" placeholder="path">?
-    <input type="text" ng-model="key1" class="form-control" placeholder="key">=
-    <input type="text" ng-model="value1" class="form-control" placeholder="value">
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">From</span>
+    </div>
+    <select class="custom-select" ng-model="fromLanguage">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="ja">Japanese</option>
+        <option value="pt">Portuguese</option>
+        <option value="es">Spanish</option>
+    </select>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text">To</span>
+    </div>
+    <select class="custom-select" ng-model="toLanguage" ng-change="translate()">
+        <option value="en">English</option>
+        <option value="fr">French</option>
+        <option value="ja">Japanese</option>
+        <option value="pt">Portuguese</option>
+        <option value="es">Spanish</option>
+    </select>
+</div>
+
+<div class="input-group mb-3">
+    <textarea type="text" class="form-control" ng-model="textIn" rows="4" readonly></textarea>
     <div class="input-group-append">
-        <button type="submit" class="btn btn-outline-secondary">Go</button>
+        <button class="btn align-content-center" ng-class="listenButtonClass" type="button" ng-click="listen()" ng-disabled="listenButtonDisabled"><i
+                class="material-icons">
+            mic
+        </i><br>{{listenButtonText}}
+        </button>
     </div>
+</div>
 
-</form>
-<form ng-sumbit="submittext()" class="input-group mb-4">
-
-    <div class="form-group align-content-center">
-        <label for="exampleFormControlTextarea1"></label>
-        <textarea class="form-control"  id="exampleFormControlTextarea1" rows="4" cols="60" ng-model="TextNSpeech" placeholder="Please enter text to be turned to speech" ></textarea>
-        <button ng-click="TextToSpeech()" type="button" class="btn btn-outline-secondary align-content-center"> Enter </button>
+<div class="input-group mb-3">
+    <textarea type="text" class="form-control" ng-model="textOut" rows="4" readonly></textarea>
+    <div class="input-group-append">
+        <button class="btn align-content-center btn-primary" type="button" ng-click="speak()"><i
+                class="material-icons">
+            volume_up
+        </i><br>Speak
+        </button>
     </div>
-</form>
-<ul class="list-group" ng-if="url">
-    <li class="list-group-item">{{url}}</li>
-</ul>
+</div>

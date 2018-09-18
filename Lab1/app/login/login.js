@@ -1,102 +1,75 @@
 'use strict';
 
-const NUTRITIONIX_APP_ID = 'aa57eedf';
-const NUTRITIONIX_APP_KEY = 'a8df0d15f6637c1f1aad2203a71fa2d5';
+const GoogleSignInScriptId = 'google_sign_in';
+const GoogleSignInClientId = '844253866537-m3fj8q71e8qllk0j6rv78pd5u9rcvlfl.apps.googleusercontent.com';
 
-const foodModule = angular.module('lab1App.food', ['ngRoute']);
+const loginModule = angular.module('lab1App.login', ['ngRoute']);
 
-foodModule.config(['$routeProvider', function ($routeProvider) {
-	$routeProvider.when('/food', {
-		templateUrl: 'food/food.html',
-		controller: 'foodController'
+loginModule.config(['$routeProvider', function ($routeProvider) {
+	$routeProvider.when('/login', {
+		templateUrl: 'login/login.html',
+		controller: 'loginController'
 	});
 }]);
 
-foodModule.controller('foodController', ['$scope', '$http', 'storage', function ($scope, $http, storage) {
+loginModule.controller('loginController', ['$window', '$location', '$scope', '$http', 'storage', function ($window, $location, $scope, $http, storage) {
+	const console = $window.console;
+	const document = $window.document;
 
-	$scope.findAndSpeak = function () {
-		Promise.all([$scope.getAudio(), $scope.getNutrition()]);
+	$scope.onSuccess = function (googleUser) {
+		console.log(googleUser);
+		var profile = googleUser.getBasicProfile();
+		console.log(profile);
+		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		console.log('Name: ' + profile.getName());
+		console.log('Image URL: ' + profile.getImageUrl());
+		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		storage.local.loggedIn = true;
+		$location.path('/home');
 	};
 
-	$scope.getAudio = function () {
-		return $scope.getToken().then(token => $scope.buildUrl({
-			host: 'stream.watsonplatform.net',
-			path: 'text-to-speech/api/v1/synthesize',
-			query: {
-				accept: 'audio/mp3',
-				voice: 'en-US_AllisonVoice',
-				text: $scope.term,
-				'watson-token': token
-			}
-		})).then(url => {
-			const audio = new Audio(url);
-			return audio.play();
+	$scope.onFailure = function(error) {
+		console.log(error);
+	};
+
+	$scope.signOut = function() {
+		const gapi = $window.gapi;
+		const auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function () {
+			console.log('User signed out.');
+			storage.local.loggedIn = false;
 		});
 	};
 
-	$scope.getNutrition = function () {
-		return $http.get($scope.buildUrl({
-			host: 'api.nutritionix.com',
-			path: `v1_1/search/${encodeURIComponent($scope.term)}`,
-			query: {
-				results: '0:1',
-				fields: 'nf_calories,nf_serving_weight_grams',
-				appId: NUTRITIONIX_APP_ID,
-				appKey: NUTRITIONIX_APP_KEY
-			}
-		})).then(results => {
-			// Overly complex way of extracting parameters without needing to check for null
-			const {
-				data: {
-					hits: [{
-						fields: {
-							nf_calories: calories,
-							nf_serving_weight_grams: weight
-						} = {}
-					} = {}] = []
-				} = {}
-			} = results || {};
+	$scope.onLoad = function () {
+		const gapi = $window.gapi;
+		console.log('onload', gapi);
 
-			Object.assign($scope, {calories, weight});
+		gapi.load('auth2', function () {
+			gapi.auth2.init({
+				client_id: GoogleSignInClientId,
+				cookie_policy: 'none',
+			});
+
+			gapi.signin2.render('my-signin2', {
+				'longtitle': true,
+				'onsuccess': $scope.onSuccess,
+				'onfailure': $scope.onFailure
+			});
 		});
 	};
 
-	// Components to URL.
+	if (!document.getElementById(GoogleSignInScriptId)) {
+		const script = document.createElement('script');
+		script.id = GoogleSignInScriptId;
+		script.type = 'application/javascript';
+		script.async = true;
+		script.defer = true;
+		script.src = 'https://apis.google.com/js/platform.js';
+		script.onload = $scope.onLoad;
+		document.head.appendChild(script);
+	} else {
+		$scope.onLoad();
+	}
 
-	$scope.buildUrl = function ({protocol = 'https', host, port = 0, path, query = {}}) {
-		const portStr = port ? `:${port}` : '';
-		const queryParts = Object.entries(query)
-			.map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-		const queryString = queryParts.length ? `?${queryParts.join('&')}` : '';
-		return `${protocol}://${host}${portStr}/${path}${queryString}`;
-	};
-
-	// Token management.
-
-	$scope.getToken = function () {
-		if ($scope.validToken()) {
-			return Promise.resolve(storage.local.auth.token);
-		}
-
-		return $scope.loadToken();
-	};
-
-	$scope.validToken = function () {
-		return storage.local.auth && storage.local.auth.token && Date.now() < storage.local.auth.expires;
-	};
-
-	$scope.loadToken = function () {
-		console.log('Loading new token');
-		return $http.get($scope.buildUrl({
-			protocol: 'http',
-			host: 'localhost',
-			port: 3000,
-			path: 'token'
-		})).then(results => {
-			storage.local.auth = results.data;
-			return storage.local.auth.token;
-		});
-	};
-
-	$scope.getToken(); //Pre-load the token
 }]);
