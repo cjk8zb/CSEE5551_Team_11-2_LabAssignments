@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="lab1App"  class="h-100">
+<html lang="en" ng-app="lab1App" class="h-100">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,27 +12,30 @@
 </head>
 <body class="h-100 d-flex flex-column">
 
-<nav class="navbar navbar-expand navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light" ng-controller="loginController" ng-show="loggedIn()">
     <span class="navbar-brand mb-0 h1">Lab 1</span>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="#!/home">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#!/about">About</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#!/contact">Contact</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#!/login">Login</a>
-        </li>
-    </ul>
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault" >
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#!/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!/about">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#!/contact">Contact</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right"  >
+            <li class="nav-item">
+                <a class="nav-link" ng-click="signOut()">Logout</a>
+            </li>
+        </ul>
     </div>
 </nav>
 

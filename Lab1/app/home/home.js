@@ -31,6 +31,7 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 	$scope.listenButtonText = "Listen";
 	$scope.listenButtonDisabled = false;
 	$scope.listenButtonClass = "btn-primary";
+	$scope.speakButtonDisabled = false;
 
 	$scope.buildUrl = function ({protocol = 'https', host, port = 0, path = "", query = {}}) {
 		const portStr = port ? `:${port}` : '';
@@ -47,14 +48,14 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 
 	$scope.getToken = function (serviceName) {
 		if ($scope.validToken(serviceName)) {
-			return Promise.resolve(storage[serviceName].token);
+			return Promise.resolve(storage.local[serviceName].token);
 		}
 
 		return $scope.loadToken(serviceName);
 	};
 
 	$scope.validToken = function (serviceName) {
-		return storage[serviceName] && storage[serviceName] && storage[serviceName].token && Date.now() < storage[serviceName].expires;
+		return storage.local[serviceName] && storage.local[serviceName] && storage.local[serviceName].token && Date.now() < storage.local[serviceName].expires;
 	};
 
 	$scope.loadToken = function (serviceName) {
@@ -64,8 +65,8 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 			port: 3000,
 			path: ['token', serviceName]
 		})).then(results => {
-			storage[serviceName] = results.data;
-			return storage[serviceName].token;
+			storage.local[serviceName] = results.data;
+			return storage.local[serviceName].token;
 		});
 	};
 
@@ -115,10 +116,10 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 	};
 
 	$scope.speak = function () {
-		if (!($scope.toLanguage && $scope.textIn)) {
+		if (!($scope.toLanguage && $scope.textOut)) {
 			return;
 		}
-
+		$scope.speakButtonDisabled = true;
 		return $scope.getToken('textToSpeech').then(token => $scope.buildUrl({
 			host: 'stream.watsonplatform.net',
 			path: 'text-to-speech/api/v1/synthesize',
@@ -131,6 +132,13 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 		})).then(url => {
 			const audio = new Audio(url);
 			return audio.play();
+		}).then(() => {
+			$scope.speakButtonDisabled = false;
+			$scope.$apply();
+		}).catch(error => {
+			console.error('speak error', error);
+			$scope.speakButtonDisabled = false;
+			$scope.$apply();
 		});
 	};
 
@@ -147,13 +155,7 @@ homeModule.controller('homeController', ['$scope', '$http', 'storage', function 
 			path: ['translate', $scope.fromLanguage, $scope.toLanguage, $scope.textIn]
 		})).then(results => {
 			console.info('translate results', results);
-			const {data} = results;
-			console.log('data', data);
-			const {data: {translations}} = results;
-			console.log('translations', translations);
-			const {data: {translations: [first]}} = results;
-			console.log('first', first);
-			const {data: {translations: [{translation}]}} = results;
+			const {data: {translations: [{translation} = ""] = []} = {}} = results || {};
 			console.log('translation', translation);
 			if (translation) {
 				$scope.textOut = translation;
