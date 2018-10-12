@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "798867923027",
+    "firebase_url": "https://cs5551-icp7.firebaseio.com",
+    "project_id": "cs5551-icp7",
+    "storage_bucket": "cs5551-icp7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798867923027:android:e7f8376095a239e0",
+        "android_client_info": {
+          "package_name": "com.example.tondi.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798867923027-fqkhol53q035tdud248741h6e4kjkib0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUOYQBm1FVCZhK-fBaYJRJJQeadjbeNU4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
