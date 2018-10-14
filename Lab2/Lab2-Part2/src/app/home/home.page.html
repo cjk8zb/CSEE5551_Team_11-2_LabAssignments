@@ -15,16 +15,18 @@
         <ion-card-content>
             <p>Take a picture of your food to find nutrition information.</p>
             <br>
-            <ion-button (click)="foo()" expand="block">Take a Picture</ion-button>
-
+            <ion-button (click)="takePicture()" expand="block">Take a Picture</ion-button>
         </ion-card-content>
-
     </ion-card>
-    <ion-list *ngIf="ingredients">
+    <ion-list *ngIf="concepts">
         <ion-list-header>Ingredients</ion-list-header>
-        <ion-item *ngFor="let ingredient of ingredients; let i = index">
-            <ion-label>{{ingredient}}</ion-label>
-            <ion-button size="small" shape="round" color="primary" fill="outline" (click)="getNutrients(i)">Info</ion-button>
+        <ion-item *ngFor="let ingredient of concepts; let i = index">
+            <ion-label>
+                <strong>{{ingredient.name}}</strong>
+                <ion-badge color="light" margin-start>Confidence {{ingredient.value | percent: '1.1-1'}}</ion-badge>
+            </ion-label>
+            <ion-button size="small" shape="round" color="primary" fill="outline" (click)="getNutrients(i)">Info
+            </ion-button>
         </ion-item>
     </ion-list>
 </ion-content>
@@ -33,12 +35,11 @@
     <ion-item-divider>
         <ion-label>
             <h2>{{currentIngredient.label}}</h2>
-            <h3 *ngFor="let nutrient of currentIngredient.nutrients">{{nutrient.name}}: {{nutrient.value}} {{nutrient.unit}}</h3>
+            <h3 *ngFor="let nutrient of currentIngredient.nutrients">{{nutrient.name}}: {{nutrient.value | number:
+                '1.0-2'}} {{nutrient.unit}}</h3>
         </ion-label>
         <ion-button (click)="hideFooter()" button-type="bar-button">
             <ion-icon slot="icon-only" name="close"></ion-icon>
         </ion-button>
-
-
     </ion-item-divider>
 </ion-footer>
