@@ -2,7 +2,7 @@
   <div class="card shadow text-center" style="width: 18rem;">
     <div class="card-body">
       <h5 class="card-title">Welcome</h5>
-      <p class="card-text">Please Enter a Nickname</p>
+      <p class="card-text">Please Enter a Nickname {{hostname}}</p>
       <form (ngSubmit)="onSubmit()" #form="ngForm">
         <input type="text" class="form-control" id="nickname" name="nickname" [(ngModel)]="nickname" required>
         <button type="submit" class="btn btn-primary mt-3" [disabled]="!form.form.valid">Join</button>

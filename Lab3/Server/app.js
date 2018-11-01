@@ -1,101 +1,105 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const WebSocket = require('ws');
+const MongoClient = require('mongodb').MongoClient;
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const app = express();
+let database;
 
-var app = express();
+// CORS
+app.use(function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+	next();
+});
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
-app.use(logger('dev'));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 //Your added functions
-var url = 'mongodb://root:password1@ds147233.mlab.com:47233/lab3';
-app.get('/register', function(req, res){
-    MongoClient.connect(url, function(err, db){
-        if(err){
-            console.log("error connecting")
-        }
-        console.log("connected successfully")
-    });
-});
-app.get('/chatroom', function(req, res){
-    MongoClient.connect(url, function(err, db){
-        if(err){
-            console.log("error connecting")
-        }
-        console.log("connected successfully")
-    });
-});
-app.post('/chatroom', function(req, res){
-    MongoClient.connect(url, function(err,db){
-        if(err){
-            console.log("error connecting")
-        }
-        console.log("connected successfully")
-    });
-});
-app.put('/chatroom', function(req, res){
-    MongoClient.connect(url, function(err,db){
-        if(err){
-            console.log("error connecting")
-        }
-        console.log("connected successfully")
-    });
+const url = 'mongodb://root:password1@ds147233.mlab.com:47233/lab3';
+
+app.get('/chatroom', async function (req, res) {
+	const topics = {};
+	const collections = await database.listCollections().toArray();
+	for (const {name} of collections) {
+		if (name.startsWith('system.')) {
+			continue;
+		}
+		const messages = await database.collection(name).find({}).toArray();
+		topics[name] = {messages};
+		console.log('collection', name, 'messages', messages);
+	}
+	res.json(topics);
 });
 
-var createCollection = function(db,data,callback){
-    db.createCollection(data);
-    callback();
+app.post('/chatroom', function (req, res) {
+	const topic = req.body.topic;
+	console.log('posted', req.body);
+	database.createCollection(topic).then(value => {
+		res.status(201);
+		console.log('createCollection', value);
+		broadcast({topic});
+	});
+});
+
+app.delete('/chatroom', function (req, res) {
+	console.log('delete', req.query);
+	const deleteTopic = req.query.topic;
+	database.dropCollection(deleteTopic).then(value => {
+		res.status(201);
+		console.log('dropCollection', value);
+		broadcast({deleteTopic});
+	});
+});
+
+app.use(express.static(path.join(__dirname, 'chat-client')));
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'chat-client/index.html'));
+});
+
+let sockets = [];
+
+function broadcast(json) {
+	sockets = sockets.filter(socket => {
+		try {
+			socket.send(JSON.stringify(json));
+			return true
+		} catch (e) {
+			console.error('Removing socket:', e);
+			return false;
+		}
+	});
 }
 
-var createUser = function(db,data,callback){
-    db.createUser({
-        "user": data.user,
-        "pwd": data.pwd,
-        "roles": []
-    },
-        function(err, result){
-            assert.equal(err, null);
+MongoClient.connect(url, {useNewUrlParser: true}).then(client => {
+	database = client.db();
+	console.log("Connected to MongoDB");
+	const PORT = process.env.PORT || 3000;
+	const server = app.listen(PORT, function () {
+		const host = server.address().address;
+		const port = server.address().port;
 
-        })
-}
-
-var server = app.listen(8081,function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log("App listening at http://%s:%s", host, port)});
-
-//End of added function
-
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+		console.log("App listening at http://%s:%s", host, port)
+	});
+	const wss = new WebSocket.Server({server});
+	wss.on('connection', (ws) => {
+		ws.on('message', (message) => {
+			const json = JSON.parse(message);
+			if (json.join) {
+				sockets.push(ws);
+				broadcast({joined: json.join});
+			} else if (json.send) {
+				const {topic, text, sender} = json.send;
+				database.collection(topic).insertOne({sender, text});
+				broadcast({message: json.send});
+			} else {
+				ws.send(JSON.stringify({error: {json}}));
+			}
+		});
+	});
+}).catch(err => {
+	console.log("Error connecting to MongoDB", err);
 });
 
 module.exports = app;

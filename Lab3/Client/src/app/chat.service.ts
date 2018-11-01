@@ -5,6 +5,9 @@ import {Router} from '@angular/router';
 
 type ChatCallback = (json: any) => void;
 
+const httpUrl = `${location.origin}/chatroom`;
+const webSocketUrl = location.origin.replace(/^http/, 'ws');
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +24,7 @@ export class ChatService {
 
   public join(nickname: String) {
     const uuid = uuidv4();
-    this.webSocket = new WebSocket('ws://localhost:8081');
+    this.webSocket = new WebSocket(webSocketUrl);
     this.webSocket.onopen = (event: Event) => {
       console.log('event', event);
       this.me = {nickname, uuid};
@@ -45,12 +48,12 @@ export class ChatService {
 
   getTopics() {
     const sender = this.me;
-    return this.http.get('http://localhost:8081/chatroom');
+    return this.http.get(httpUrl);
   }
 
   addTopic(topic: string) {
     const sender = this.me;
-    return this.http.post('http://localhost:8081/chatroom', {topic, sender}).subscribe(results => {
+    return this.http.post(httpUrl, {topic, sender}).subscribe(results => {
       console.log(results);
     }, error => {
       console.log(error);
@@ -59,7 +62,7 @@ export class ChatService {
 
   deleteTopic(topic: any) {
     const sender = this.me;
-    return this.http.delete('http://localhost:8081/chatroom', {params: {topic, sender}}).subscribe(results => {
+    return this.http.delete(httpUrl, {params: {topic, sender}}).subscribe(results => {
       console.log(results);
     }, error => {
       console.log(error);
