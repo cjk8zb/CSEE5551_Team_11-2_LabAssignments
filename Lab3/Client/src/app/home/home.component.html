@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="col-8 border-left p-0 d-flex flex-column">
-    <div class="p-3 flex-fill" id="messages">
+    <div class="p-3 flex-fill" id="messages" #messagesList [scrollTop]="messagesList.scrollHeight">
       <ng-container *ngIf="topics[currentTopic]">
 
 

@@ -93,6 +93,8 @@ MongoClient.connect(url, {useNewUrlParser: true}).then(client => {
 				const {topic, text, sender} = json.send;
 				database.collection(topic).insertOne({sender, text});
 				broadcast({message: json.send});
+			} else if (json.pong) {
+				console.log('Keep Alive');
 			} else {
 				ws.send(JSON.stringify({error: {json}}));
 			}
@@ -101,5 +103,9 @@ MongoClient.connect(url, {useNewUrlParser: true}).then(client => {
 }).catch(err => {
 	console.log("Error connecting to MongoDB", err);
 });
+
+setInterval(()=> {
+	broadcast({ping: Date.now()})
+}, 3000);
 
 module.exports = app;

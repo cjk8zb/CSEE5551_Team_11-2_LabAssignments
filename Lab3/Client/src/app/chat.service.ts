@@ -35,6 +35,8 @@ export class ChatService {
       if (json.joined && json.joined.uuid && json.joined.uuid === uuid) {
         this.isConnected = true;
         this.router.navigate(['/']);
+      } else if (json.ping) {
+        this.webSocket.send(JSON.stringify({pong: Date.now()}));
       } else {
         this.listener(json);
       }
