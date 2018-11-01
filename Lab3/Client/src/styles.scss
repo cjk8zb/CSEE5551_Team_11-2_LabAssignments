@@ -1,0 +1,9 @@
+$enable-shadows: true;
+$enable-gradients: true;
+
+@import "~bootstrap/scss/bootstrap";
+@import "~font-awesome/css/font-awesome.css";
+
+body, app-root {
+  min-height: 100vh;
+}
