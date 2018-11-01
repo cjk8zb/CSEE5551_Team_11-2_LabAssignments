@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ChatService} from '../chat.service';
 
 @Component({
   selector: 'app-welcome',
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor() { }
+  nickname = '';
+
+  constructor(private chat: ChatService) {
+  }
 
   ngOnInit() {
   }
 
+  onSubmit() {
+    if (!this.nickname.length) {
+      return;
+    }
+
+    this.chat.join(this.nickname);
+  }
 }

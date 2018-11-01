@@ -2,44 +2,56 @@
 
   <div class="col-4 p-0">
     <header class="navbar sticky-top navbar-dark bg-dark">
-      <span class="navbar-brand mb-0 h1">Topics 3</span>
-      <form class="inline-form">
+      <span class="navbar-brand mb-0 h1">Topics</span>
+      <form class="inline-form" (ngSubmit)="addTopic()" #topicForm="ngForm">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Add Topic">
+          <input type="text" class="form-control" placeholder="Add Topic" id="topic" name="topic"
+                 [(ngModel)]="newTopic" required>
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-plus"></i></button>
+            <button class="btn btn-outline-secondary" type="submit" [disabled]="!topicForm.form.valid"><i
+              class="fa fa-plus"></i></button>
           </div>
         </div>
       </form>
     </header>
     <div class="list-group list-group-flush">
 
-      <a *ngFor="let topic of topics" href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" [class.list-group-item-secondary]="topic == currentTopic">
-        {{topic.name}}
-        <span class="badge badge-primary badge-pill" *ngIf="topic.unread">{{topic.unread}}</span>
+      <a *ngFor="let topic of topics | keyvalue" (click)="changeTopic(topic.key)"
+         class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+         [class.list-group-item-secondary]="topic.key == currentTopic">
+        <span class="flex-fill">{{topic.key}}</span>
+        <span class="badge badge-primary badge-pill mx-3" *ngIf="topic.value.unread">{{topic.value.unread}}</span>
+        <button class="btn btn-outline-danger" (click)="deleteTopic(topic.key)" type="button"><i
+          class="fa fa-trash"></i></button>
       </a>
     </div>
   </div>
   <div class="col-8 border-left p-0 d-flex flex-column">
     <div class="p-3 flex-fill" id="messages">
+      <ng-container *ngIf="topics[currentTopic]">
 
 
-      <div *ngFor="let message of currentTopic.messages" class="media p-3 mb-2"  [ngClass]="styled(message)">
-        <div class="media-body">
-          <em *ngIf="message.typing && !mine(message)">{{message.sender}} is typing&hellip;</em>
-          <div *ngIf="!message.typing">
-          <b class="mt-0" *ngIf="!mine(message)">{{message.sender}}</b>
-          {{message.text}}
+        <div *ngFor="let message of topics[currentTopic].messages" class="media p-3 mb-2" [ngClass]="styled(message)">
+          <div class="media-body">
+            <em *ngIf="message.typing && !mine(message)">{{message.sender.nickname}} is typing&hellip;</em>
+            <em *ngIf="message.joined && !mine(message)">{{message.sender.nickname}} has joined!</em>
+            <div *ngIf="message.text">
+              <b class="mt-0" *ngIf="!mine(message)">{{message.sender.nickname}}</b>
+              {{message.text}}
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
 
     </div>
-    <form class="navbar navbar-light bg-light border-top shadow">
+
+    <form (ngSubmit)="onSubmit()" class="navbar navbar-light bg-light border-top shadow" #messageForm="ngForm">
       <div class="input-group">
-        <input type="text" class="form-control" placeholder="Send Message">
+        <input type="text" class="form-control" placeholder="Send Message" id="message" name="message"
+               [(ngModel)]="currentMessage" required>
         <div class="input-group-append">
-          <button class="btn btn-primary" type="submit"><i class="fa fa-paper-plane"></i></button>
+          <button class="btn btn-primary" type="submit" [disabled]="!messageForm.form.valid"><i
+            class="fa fa-paper-plane"></i></button>
         </div>
       </div>
 
