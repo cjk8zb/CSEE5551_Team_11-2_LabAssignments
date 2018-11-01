@@ -1,3 +1,5 @@
+import * as MongoClient from "mongodb";
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -21,56 +23,58 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Your added functions
 var url = 'mongodb://root:password1@ds147233.mlab.com:47233/lab3';
-app.get('/register', function(req, res){
-    MongoClient.connect(url, function(err, db){
-        if(err){
-            console.log("error connecting")
-        }
-        console.log("connected successfully")
-    });
-});
 app.get('/chatroom', function(req, res){
     MongoClient.connect(url, function(err, db){
         if(err){
             console.log("error connecting")
         }
+        getTopics(db, req.body, function(){
+
+        });
         console.log("connected successfully")
     });
 });
 app.post('/chatroom', function(req, res){
     MongoClient.connect(url, function(err,db){
         if(err){
-            console.log("error connecting")
+            console.log("error creating topic")
         }
-        console.log("connected successfully")
+        createTopic(db, req.body, function(){
+
+        });
+        console.log("Topic created")
     });
 });
-app.put('/chatroom', function(req, res){
+app.delete('/chatroom', function(req, res){
     MongoClient.connect(url, function(err,db){
         if(err){
-            console.log("error connecting")
+            console.log("error deleting topic")
         }
-        console.log("connected successfully")
+        deleteTopic(db, req.body, function(){
+
+        });
+        console.log("Topic deleted")
+
     });
 });
 
-var createCollection = function(db,data,callback){
-    db.createCollection(data);
+var createTopic = function(db,data,callback){
+    db.createCollection(data.topic);
+    console.log("creating Topic");
     callback();
-}
+};
 
-var createUser = function(db,data,callback){
-    db.createUser({
-        "user": data.user,
-        "pwd": data.pwd,
-        "roles": []
-    },
-        function(err, result){
-            assert.equal(err, null);
+var deleteTopic = function(db,data,callback){
+    console.log("dropping Topic");
+    db.data.drop();
+    callback();
+};
 
-        })
-}
-
+var getTopics = function(db, data, callback){
+    console.log("retrieving Topic");
+    db.collection.find({});
+    callback();
+};
 var server = app.listen(8081,function () {
     var host = server.address().address;
     var port = server.address().port;
